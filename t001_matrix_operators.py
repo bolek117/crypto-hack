@@ -6,12 +6,12 @@ def bytes2matrix(b: bytes):
 def matrix2bytes(matrix) -> bytes:
     """ Converts a 4x4 matrix into a 16-byte array.  """
     result = bytearray()
-    for row in matrix:
-        for i in row:
-            result.append(i)
-
-    return bytes(result)
-    # return bytes(sum(matrix, []))
+    # for row in matrix:
+    #     for i in row:
+    #         result.append(i)
+    #
+    # return bytes(result)
+    return bytes(sum(matrix, []))
 
 
 if __name__ == '__main__':

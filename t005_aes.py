@@ -1,7 +1,7 @@
-from add_round_key import add_round_key
-from diffusion import inv_mix_columns, inv_shift_rows
-from matrix_operators import bytes2matrix, matrix2bytes
-from sub_bytes import inv_s_box, s_box, sub_bytes
+from t002_add_round_key import add_round_key
+from t004_diffusion import inv_mix_columns, inv_shift_rows
+from t001_matrix_operators import bytes2matrix, matrix2bytes
+from t003_sub_bytes import inv_s_box, s_box, sub_bytes
 
 N_ROUNDS = 10
 
