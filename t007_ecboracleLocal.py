@@ -1,15 +1,14 @@
 #!/usr/bin/env python3.8
 import string
 import time
-
 import requests
+
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 
 KEY = b'\xc3,\\\xa6\xb5\x80^\x0c\xdb\x8d\xa5z*\xb6\xfe\\'
 FLAG = 'crypto{test_flag_abcdef}'
 BLOCK_LEN = 32
-BLOCK_LEN_HEX = int(BLOCK_LEN / 2)
 
 
 class Ciphertext:
@@ -76,6 +75,16 @@ def encrypt(plaintext) -> str:
     return encrypted.hex()
 
 
+def iterate_character(found_characters: bytearray, using_local: bool):
+    known_text = found_characters.hex()
+
+    ciphertext = Ciphertext.from_plaintext(known_text, True, using_local)
+    reference_block = ciphertext.checked_block()
+
+    found_character = bruteforce_character(known_text, reference_block, using_local)
+    return found_character
+
+
 def bruteforce_character(known_text: str, reference_block: str, using_local: bool) -> str:
     for i in string.printable:
         c = hex(ord(i))[2:].zfill(2)
@@ -116,16 +125,6 @@ def main(using_local: bool):
 
     print(f'Flag: {found_characters.decode()}')
     return
-
-
-def iterate_character(found_characters: bytearray, using_local: bool):
-    known_text = found_characters.hex()
-
-    ciphertext = Ciphertext.from_plaintext(known_text, True, using_local)
-    reference_block = ciphertext.checked_block()
-
-    found_character = bruteforce_character(known_text, reference_block, using_local)
-    return found_character
 
 
 if __name__ == '__main__':
