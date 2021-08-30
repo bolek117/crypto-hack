@@ -6,6 +6,7 @@ import requests
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 
+# Gits: https://gist.github.com/bolek117/7d4adce87d41bf12b40adce08e47976f
 KEY = b'\xc3,\\\xa6\xb5\x80^\x0c\xdb\x8d\xa5z*\xb6\xfe\\'
 FLAG = 'crypto{test_flag_abcdef}'
 BLOCK_LEN = 32
