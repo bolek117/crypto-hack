@@ -131,8 +131,9 @@ def main(use_local: bool):
     c11 = c2
     c12 = c1
     print(f'c11 <- {c2=}\nc12 <- {c1=}')
-    
-    header(f'Execute `decrypt({c11.hextext[:2]}...{c12.hextext[-2:]})` to get P12')
+
+    header(
+        f'Execute `decrypt({c11.hextext[:2]}...{c12.hextext[-2:]})` to get P12')
     swaped = HexString.from_hextext(c11.hextext + c12.hextext)
     decrypted_swap = receive(swaped.hextext, use_local)
 
@@ -149,7 +150,7 @@ def main(use_local: bool):
 
     header('XOR C2 with P12 to get D12')
     print(f'{c2=} XOR {p12=} =')
-    
+
     d12 = xor(c2.data, p12.data)
     d12 = HexString(d12)
     print(f'{d12=}')
@@ -160,7 +161,7 @@ def main(use_local: bool):
 
     header('XOR D1 with P1 to get IV')
     print(f'{d1=} XOR {p1=} = ')
-    
+
     iv = xor(d12.data, p1.data)
     iv = HexString(iv)
     print(f'{iv=}')
@@ -173,4 +174,4 @@ def main(use_local: bool):
 
 
 if __name__ == '__main__':
-    main(use_local=True)
+    main(use_local=False)
