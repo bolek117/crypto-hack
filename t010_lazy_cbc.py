@@ -127,8 +127,13 @@ def main(use_local: bool):
     c1, c2 = blocks
     print(f'{c1=}\n{c2=}')
 
-    header('Swap blocks order and decrypt to get P12')
-    swaped = HexString.from_hextext(c2.hextext + c1.hextext)
+    header('Swap blocks order')
+    c11 = c2
+    c12 = c1
+    print(f'c11 <- {c2=}\nc12 <- {c1=}')
+    
+    header(f'Execute `decrypt({c11.hextext[:2]}...{c12.hextext[-2:]})` to get P12')
+    swaped = HexString.from_hextext(c11.hextext + c12.hextext)
     decrypted_swap = receive(swaped.hextext, use_local)
 
     if 'error' not in decrypted_swap:
@@ -143,20 +148,24 @@ def main(use_local: bool):
     print(f'{p11=}\n{p12=}')
 
     header('XOR C2 with P12 to get D12')
+    print(f'{c2=} XOR {p12=} =')
+    
     d12 = xor(c2.data, p12.data)
     d12 = HexString(d12)
     print(f'{d12=}')
 
-    header('Replace D1 with D12')
+    header('Replace D1 with content of D12')
     d1 = d12
-    print(f'{d1=}')
+    print(f'd1 <- {d12=}')
 
     header('XOR D1 with P1 to get IV')
+    print(f'{d1=} XOR {p1=} = ')
+    
     iv = xor(d12.data, p1.data)
     iv = HexString(iv)
     print(f'{iv=}')
 
-    header('Get flag')
+    header('Get flag from server')
     flag = get_flag(iv.hextext, use_local)
     flag = HexString.from_hextext(
         flag['plaintext']).plaintext if 'plaintext' in flag else flag
