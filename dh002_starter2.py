@@ -1,3 +1,5 @@
+# https://www.youtube.com/watch?v=X8DSMO4YMJ0
+
 def smallest_primitive(n: int) -> int:
     for g in range(2, n):
         subgroup_h = set()
